@@ -1,0 +1,53 @@
+package es.uji.al435152_al449836.algoritmos;
+
+import es.uji.al435152_al449836.datos.RowWithLabel;
+import es.uji.al435152_al449836.datos.TableWithLabels;
+
+import java.util.List;
+
+public class KNN {
+    private TableWithLabels tablaEntrenada;
+    public void train(TableWithLabels data){
+        tablaEntrenada = data;
+    }
+
+    /**
+
+     */
+    public Integer estimate(List<Double> data){
+        if (tablaEntrenada == null) throw new IllegalStateException("No se ha entrenado la tabla");
+
+        double bestDist = Double.POSITIVE_INFINITY;             //aqui guardaremos la distancia minima encontrada
+        String bestLabel = null;                                //etiqueta del vecino mas cercano
+        int n = tablaEntrenada.getRowCount();                   //longitud de la tabla
+
+        for (int i = 0; i < n; i++) {                           //recorremos la tabla
+
+            RowWithLabel row = tablaEntrenada.getRowAt(i);      //por cada fila
+            List<Double> x = row.getData();                     //extraemos los datos
+            double dist = funcionEuclidiana(data, x);           //y calculamos la distancia entre ambas
+
+            if (dist < bestDist) {                              //si la distancia que hemos encontrado es menor que
+                bestDist = dist;                                // la mejor distancia que habiamos encontrados, entonces
+                bestLabel = row.getLabel();                     // hacemos el cambio de variables
+            }
+        }
+
+        return tablaEntrenada.getLabelAsInteger(bestLabel);     //devolvemos la etiqueta del vecino mas cercano convertida a entero
+
+    }
+    /**
+        Esta funcion es la formula matematica que calculara
+        la distancia entre ambas listas
+     */
+    private double funcionEuclidiana(List<Double> a, List<Double> b){
+        double sum = 0.0;
+        int d = a.size();
+        for (int i = 0; i < d; i++) {
+            double diff = a.get(i) - b.get(i);
+            sum += diff * diff;
+        }
+        return Math.sqrt(sum);
+    }
+
+}
