@@ -1,14 +1,18 @@
 package es.uji.al435152_al449836.algoritmos;
 
 import es.uji.al435152_al449836.datos.RowWithLabel;
+import es.uji.al435152_al449836.datos.Table;
 import es.uji.al435152_al449836.datos.TableWithLabels;
 
+import java.util.Collection;
 import java.util.List;
 
-public class KNN {
+public class KNN implements Algorithm<TableWithLabels,List<Double>,Integer> {
+
     private TableWithLabels tablaEntrenada;
+
     public void train(TableWithLabels data){
-        tablaEntrenada = data;
+        tablaEntrenada = (TableWithLabels) data;
     }
 
     /**

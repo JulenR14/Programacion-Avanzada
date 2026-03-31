@@ -1,5 +1,6 @@
 package es.uji.al435152_al449836.algoritmos;
 
+import es.uji.al435152_al449836.algoritmos.excepciones.InvalidClusterNumberException;
 import es.uji.al435152_al449836.datos.Table;
 
 import java.util.*;
@@ -7,7 +8,7 @@ import java.util.*;
 import es.uji.al435152_al449836.datos.Row;
 
 
-public class KMeans {
+public class KMeans implements Algorithm<Table,List<Double>,Integer>{
     //Atributos
     private int numClusters;                //numero de grupos
     private int numIterations;              //numero de iteraciones
@@ -27,6 +28,7 @@ public class KMeans {
 
 
     public void train(Table table){
+        if (numClusters>table.getRowCount()) throw new InvalidClusterNumberException(numClusters,table.getRowCount());
         this.data = table;
         this.centroides = new ArrayList<>();
 
