@@ -1,5 +1,7 @@
 package es.uji.al435152_al449836.algoritmos;
 
+import es.uji.al435152_al449836.algoritmos.distancias.Distance;
+import es.uji.al435152_al449836.algoritmos.distancias.EuclideanDistance;
 import es.uji.al435152_al449836.algoritmos.excepciones.InvalidClusterNumberException;
 import es.uji.al435152_al449836.datos.Table;
 
@@ -14,14 +16,23 @@ public class KMeans implements Algorithm<Table,List<Double>,Integer>{
     private Random random;                  // generador aleatorio (controlado por seed)
     private Table data;                     // datos de entrenamiento
     private List<List<Double>> centroides;  // centroides actuales
+    private Distance distance;
 
 
     // Constructor: inicializa parámetros del algoritmo
+    public KMeans(int numClusters, int numIterations, long seed, Distance distance) {
+        this.numClusters = numClusters;
+        this.numIterations = numIterations;
+        this.random = new Random(seed); // importante para reproducibilidad
+        this.centroides = new ArrayList<>();
+        this.distance = distance;
+    }
     public KMeans(int numClusters, int numIterations, long seed) {
         this.numClusters = numClusters;
         this.numIterations = numIterations;
         this.random = new Random(seed); // importante para reproducibilidad
         this.centroides = new ArrayList<>();
+        this.distance = new EuclideanDistance();
     }
 
 
@@ -46,10 +57,10 @@ public class KMeans implements Algorithm<Table,List<Double>,Integer>{
     public Integer estimate(List<Double> sample) {
         // Busca el centroide más cercano (misma lógica que en asignarClusters)
         int mejorCluster = 0;
-        double mejorDistancia = distanciaEuclidea(sample, centroides.get(0));
+        double mejorDistancia = distance.calculateDistance(sample,centroides.get(0));
 
         for (int i = 1; i < centroides.size(); i++) {
-            double distanciaActual = distanciaEuclidea(sample, centroides.get(i));
+            double distanciaActual = distance.calculateDistance(sample,centroides.get(i));
             if (distanciaActual < mejorDistancia) {
                 mejorDistancia = distanciaActual;
                 mejorCluster = i;
@@ -131,17 +142,5 @@ public class KMeans implements Algorithm<Table,List<Double>,Integer>{
         }
 
         return centroide;
-    }
-
-    private double distanciaEuclidea(List<Double> a, List<Double> b) {
-        double suma = 0.0;
-
-        // Cálculo de la distancia euclídea entre dos puntos
-        for (int i = 0; i < a.size(); i++) {
-            double diferencia = a.get(i) - b.get(i);
-            suma += diferencia * diferencia;
-        }
-
-        return Math.sqrt(suma);
     }
 }
