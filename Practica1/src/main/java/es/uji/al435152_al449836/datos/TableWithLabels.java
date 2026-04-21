@@ -41,4 +41,9 @@ public class TableWithLabels extends Table{
     public void setHeaderLabel(String headerLabel){
         this.headerLabel = headerLabel;
     }
+
+    public int getNumRows() {
+        return super.getRowCount();
+    }
+
 }

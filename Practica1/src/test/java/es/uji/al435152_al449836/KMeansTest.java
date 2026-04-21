@@ -5,6 +5,7 @@ package es.uji.al435152_al449836;
 
 
 import es.uji.al435152_al449836.algoritmos.KMeans;
+import es.uji.al435152_al449836.algoritmos.excepciones.InvalidClusterNumberException;
 import es.uji.al435152_al449836.datos.TableWithLabels;
 import es.uji.al435152_al449836.lecturas.CSV;
 import org.junit.jupiter.api.AfterEach;
@@ -57,7 +58,7 @@ class KMeansTest {
         assertNotEquals(class1, class5);
         assertNotEquals(class3, class5);
     }
-/*
+
     @Test
     @DisplayName("KMeans train - more clusters than samples")
     void train_invalidClusters() {
@@ -68,5 +69,5 @@ class KMeansTest {
         assertTrue(((InvalidClusterNumberException)e).getNumberOfCusters() > iris.getNumRows());
     }
 
-    */
+
 }

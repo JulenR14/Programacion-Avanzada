@@ -3,11 +3,13 @@ package es.uji.al435152_al449836.lecturas;
 
 import es.uji.al435152_al449836.datos.Table;
 
+import java.net.URISyntaxException;
+
 public abstract class ReaderTemplate <T extends Table>{
     private String source;
-    private T table;
+    protected T table;
 
-    public ReaderTemplate(String source, String headers, String data){
+    public ReaderTemplate(String source){
         this.source = source;
     }
 
@@ -18,7 +20,8 @@ public abstract class ReaderTemplate <T extends Table>{
     public abstract boolean hasMoreData();
     public abstract String getNextData();
 
-    public final T ReadTableFromSource(){
+
+    public final T readTableFromSource() {
         openSource(source);
         if (hasMoreData()){
             processHeaders(getNextData());
@@ -28,6 +31,11 @@ public abstract class ReaderTemplate <T extends Table>{
         }
         closeSource();
         return table;
+    }
+    public Table getTable(){return table;}
+
+    public void setTable(T table){
+        this.table = table;
     }
 
 
