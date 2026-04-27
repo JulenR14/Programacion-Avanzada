@@ -6,14 +6,16 @@ public class EuclideanDistance implements  Distance{
 
     @Override
     public double calculateDistance(List<Double> p, List<Double> q) {
+        // Aquí vamos acumulando la suma de cuadrados de las diferencias.
         double suma = 0.0;
 
-        // Cálculo de la distancia euclídea entre dos puntos
+        // Recorremos ambas listas componente a componente.
         for (int i = 0; i < p.size(); i++) {
             double diferencia = p.get(i) - q.get(i);
             suma += diferencia * diferencia;
         }
 
+        // La distancia euclídea termina sacando la raíz cuadrada.
         return Math.sqrt(suma);
     }
 }

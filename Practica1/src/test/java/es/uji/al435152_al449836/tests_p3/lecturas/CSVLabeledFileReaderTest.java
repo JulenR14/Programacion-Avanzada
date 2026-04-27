@@ -1,13 +1,17 @@
 // TODO: Remplazar <nombre> por el nombre de tu paquete
-package es.uji.al435152_al449836.tests_p3.distances;
+package es.uji.al435152_al449836.tests_p3.lecturas;
 
 // TODO: Pon los imports especificos a tu proyecto
 
-import es.uji.al435152_al449836.datos.TableWithLabels;
 import es.uji.al435152_al449836.lecturas.CSVLabeledFileReader;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+import es.uji.al435152_al449836.datos.TableWithLabels;
 
 import java.util.List;
 
@@ -27,7 +31,7 @@ class CSVLabeledFileReaderTest {
         reader = null;
     }
 
-    // TODO: Dependiendo de cómo manejas las excepciones, puedes añadir un trgetNumberOfCustersy/catch o un lanzamiento de excepción aquí.
+    // TODO: Dependiendo de cómo manejas las excepciones, puedes añadir un try/catch o un lanzamiento de excepción aquí.    
     @Test
     void readTableFromSource() {
         TableWithLabels table = reader.readTableFromSource();

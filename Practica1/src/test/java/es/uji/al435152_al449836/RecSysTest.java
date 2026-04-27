@@ -6,8 +6,10 @@ package es.uji.al435152_al449836;// TODO: Remplazar <nombre> por el nombre de tu
 import es.uji.al435152_al449836.algoritmos.Algorithm;
 import es.uji.al435152_al449836.algoritmos.KMeans;
 import es.uji.al435152_al449836.algoritmos.KNN;
+import es.uji.al435152_al449836.algoritmos.distancias.EuclideanDistance;
 import es.uji.al435152_al449836.datos.Table;
-import es.uji.al435152_al449836.lecturas.CSV;
+import es.uji.al435152_al449836.lecturas.CSVLabeledFileReader;
+import es.uji.al435152_al449836.lecturas.CSVUnlabeledFileReader;
 import es.uji.al435152_al449836.recomendaciones.RecSys;
 import org.junit.jupiter.api.*;
 import es.uji.al435152_al449836.algoritmos.excepciones.*;
@@ -50,11 +52,11 @@ class RecSysTest {
         @BeforeEach
         // TODO: añadir o eliminar excepciones según tu implementación
         void setUp() throws IOException, URISyntaxException {
-            trainTable = new CSV().readTableWithLabels(songsFolder + separator + "songs_train.csv");
-            testTable = new CSV().readTableWithLabels(songsFolder + separator + "songs_test.csv");
+            trainTable = new CSVLabeledFileReader(songsFolder + separator + "songs_train.csv").readTableFromSource();
+            testTable = new CSVLabeledFileReader(songsFolder + separator + "songs_test.csv").readTableFromSource();
             testItemNames = readNames(songsFolder + separator + "songs_test_names.csv");
 
-            algorithm = new KNN();
+            algorithm = new KNN(new EuclideanDistance());
             recSys = new RecSys(algorithm);
             recSys.train(trainTable);
             recSys.initialise(testTable, testItemNames);
@@ -95,11 +97,11 @@ class RecSysTest {
         @BeforeEach
         // TODO: añadir o eliminar excepciones según tu implementación
         void setUp() throws IOException, URISyntaxException {
-            trainTable = new CSV().readTableWithLabels(songsFolder + separator + "songs_train_withoutnames.csv");
-            testTable = new CSV().readTableWithLabels(songsFolder + separator + "songs_test_withoutnames.csv");
+            trainTable = new CSVUnlabeledFileReader(songsFolder + separator + "songs_train_withoutnames.csv").readTableFromSource();
+            testTable = new CSVUnlabeledFileReader(songsFolder + separator + "songs_test_withoutnames.csv").readTableFromSource();
             testItemNames = readNames(songsFolder + separator + "songs_test_names.csv");
 
-            algorithm = new KMeans(numClusters, numIterations, seed);
+            algorithm = new KMeans(numClusters, numIterations, seed, new EuclideanDistance());
             recSys = new RecSys(algorithm);
             recSys.train(trainTable);
             recSys.initialise(testTable, testItemNames);

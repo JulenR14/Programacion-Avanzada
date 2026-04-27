@@ -5,9 +5,10 @@ package es.uji.al435152_al449836;
 
 
 import es.uji.al435152_al449836.algoritmos.KMeans;
+import es.uji.al435152_al449836.algoritmos.distancias.EuclideanDistance;
 import es.uji.al435152_al449836.algoritmos.excepciones.InvalidClusterNumberException;
 import es.uji.al435152_al449836.datos.TableWithLabels;
-import es.uji.al435152_al449836.lecturas.CSV;
+import es.uji.al435152_al449836.lecturas.CSVLabeledFileReader;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -30,8 +31,8 @@ class KMeansTest {
     @BeforeEach
     // TODO: En caso de manejar la excepción IOException en CSV, puedes eliminarla aquí
     void setUp() throws IOException { //InvalidClusterNumberException
-        iris = new CSV().readTableWithLabels("iris.csv");
-        kMeans = new KMeans(irisClusters, numIterations, seed);
+        iris = new CSVLabeledFileReader("iris.csv").readTableFromSource();
+        kMeans = new KMeans(irisClusters, numIterations, seed, new EuclideanDistance());
         kMeans.train(iris);
     }
 
@@ -62,7 +63,7 @@ class KMeansTest {
     @Test
     @DisplayName("KMeans train - more clusters than samples")
     void train_invalidClusters() {
-        kMeans = new KMeans(200, numIterations, seed);
+        kMeans = new KMeans(200, numIterations, seed, new EuclideanDistance());
         Exception e = assertThrows(InvalidClusterNumberException.class, () -> kMeans.train(iris));
         // TODO: reemplazar getNumRows() con método equivalente, si hace falta
         System.out.println("Clusters: "+((InvalidClusterNumberException)e).getNumberOfCusters());

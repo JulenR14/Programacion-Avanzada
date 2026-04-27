@@ -1,9 +1,10 @@
 // TODO: Remplazar <nombre> por el nombre de tu paquete
-package es.uji.al435152_al449836.tests_p3.distances;
+package es.uji.al435152_al449836.tests_p3.lecturas;
 
 // TODO: Pon los imports especificos a tu proyecto
-import es.uji.al435152_al449836.lecturas.CSVUnlabeledFileReader;
 import es.uji.al435152_al449836.datos.Table;
+import es.uji.al435152_al449836.lecturas.CSVUnlabeledFileReader;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
