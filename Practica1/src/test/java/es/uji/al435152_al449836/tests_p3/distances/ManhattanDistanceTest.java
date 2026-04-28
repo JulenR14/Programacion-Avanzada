@@ -3,8 +3,8 @@ package es.uji.al435152_al449836.tests_p3.distances;
 
 // TODO: Pon los imports especificos a tu proyecto
 
-import es.uji.al435152_al449836.algoritmos.distancias.Distance;
-import es.uji.al435152_al449836.algoritmos.distancias.ManhattanDistance;
+import es.uji.al435152_al449836.modelo.algoritmos.distancias.Distance;
+import es.uji.al435152_al449836.modelo.algoritmos.distancias.ManhattanDistance;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;

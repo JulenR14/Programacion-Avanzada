@@ -2,8 +2,8 @@
 package es.uji.al435152_al449836;
 
 // TODO: Reemplazar por los imports de tu proyecto
-import es.uji.al435152_al449836.datos.RowWithLabel;
-import es.uji.al435152_al449836.datos.TableWithLabels;
+import es.uji.al435152_al449836.modelo.datos.RowWithLabel;
+import es.uji.al435152_al449836.modelo.datos.TableWithLabels;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

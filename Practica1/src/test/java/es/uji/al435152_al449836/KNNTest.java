@@ -2,10 +2,10 @@
 package es.uji.al435152_al449836;
 
 // TODO: Reemplazar por los imports de tu proyecto
-import es.uji.al435152_al449836.algoritmos.KNN;
-import es.uji.al435152_al449836.algoritmos.distancias.EuclideanDistance;
-import es.uji.al435152_al449836.datos.TableWithLabels;
-import es.uji.al435152_al449836.lecturas.CSVLabeledFileReader;
+import es.uji.al435152_al449836.modelo.algoritmos.KNN;
+import es.uji.al435152_al449836.modelo.algoritmos.distancias.EuclideanDistance;
+import es.uji.al435152_al449836.modelo.datos.TableWithLabels;
+import es.uji.al435152_al449836.modelo.lecturas.CSVLabeledFileReader;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

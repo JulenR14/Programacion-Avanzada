@@ -3,7 +3,7 @@ package es.uji.al435152_al449836.tests_p3.lecturas;
 
 // TODO: Pon los imports especificos a tu proyecto
 
-import es.uji.al435152_al449836.lecturas.CSVLabeledFileReader;
+import es.uji.al435152_al449836.modelo.lecturas.CSVLabeledFileReader;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import es.uji.al435152_al449836.datos.TableWithLabels;
+import es.uji.al435152_al449836.modelo.datos.TableWithLabels;
 
 import java.util.List;
 

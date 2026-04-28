@@ -3,16 +3,17 @@ package es.uji.al435152_al449836;// TODO: Remplazar <nombre> por el nombre de tu
 
 // TODO: Pon los imports especificos a tu proyecto
 
-import es.uji.al435152_al449836.algoritmos.Algorithm;
-import es.uji.al435152_al449836.algoritmos.KMeans;
-import es.uji.al435152_al449836.algoritmos.KNN;
-import es.uji.al435152_al449836.algoritmos.distancias.EuclideanDistance;
-import es.uji.al435152_al449836.datos.Table;
-import es.uji.al435152_al449836.lecturas.CSVLabeledFileReader;
-import es.uji.al435152_al449836.lecturas.CSVUnlabeledFileReader;
-import es.uji.al435152_al449836.recomendaciones.RecSys;
+import es.uji.al435152_al449836.modelo.algoritmos.Algorithm;
+import es.uji.al435152_al449836.modelo.algoritmos.KMeans;
+import es.uji.al435152_al449836.modelo.algoritmos.KNN;
+import es.uji.al435152_al449836.modelo.algoritmos.distancias.EuclideanDistance;
+import es.uji.al435152_al449836.modelo.datos.Table;
+import es.uji.al435152_al449836.modelo.lecturas.CSVLabeledFileReader;
+import es.uji.al435152_al449836.modelo.lecturas.CSVUnlabeledFileReader;
+import es.uji.al435152_al449836.modelo.algoritmos.excepciones.LikedItemNotFoundException;
+import es.uji.al435152_al449836.modelo.recomendaciones.RecSys;
 import org.junit.jupiter.api.*;
-import es.uji.al435152_al449836.algoritmos.excepciones.*;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
