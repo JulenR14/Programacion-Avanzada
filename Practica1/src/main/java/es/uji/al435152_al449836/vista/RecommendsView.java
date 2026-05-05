@@ -1,5 +1,10 @@
 package es.uji.al435152_al449836.vista;
-import javafx.application.Application;
+
+import es.uji.al435152_al449836.modelo.recomendaciones.ModelListener;
+import es.uji.al435152_al449836.modelo.recomendaciones.RecommendationModel;
+import javafx.collections.FXCollections;
+import javafx.geometry.Insets;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -8,34 +13,57 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class RecommendsView extends Application {
-    private VBox layaut;
-    private HBox layautCantRecomendaciones;
-    private Label labelRecomends;
-    private Label labelMSG;
-    private Spinner<Integer> numberOfRecommendationsSpinner;
-    private ListView<String> listaRecomendados;
-    private Button btnClose;
+public class RecommendsView implements ModelListener {
+    private final RecommendationModel model;
+    private final Stage stage;
+    private final Label labelMessage;
+    private final Spinner<Integer> numberOfRecommendationsSpinner;
+    private final ListView<String> recommendationsList;
+    private final Button closeButton;
 
-    @Override
-    public void start(Stage stage) throws Exception {
-        layaut = new VBox();
-        labelRecomends = new Label("Número de recomendaciones");
+    public RecommendsView(RecommendationModel model) {
+        this.model = model;
+
+        stage = new Stage();
+
+        Label labelRecommendations = new Label("Nr of recommendations:");
+        labelMessage = new Label();
 
         numberOfRecommendationsSpinner = new Spinner<>(1, 20, 5);
         numberOfRecommendationsSpinner.setEditable(true);
 
-        layautCantRecomendaciones = new HBox();
-        layautCantRecomendaciones.getChildren().addAll(labelRecomends,numberOfRecommendationsSpinner);
-        labelMSG = new Label("Si te ha gustado xxx, Te gustará: xxx");
+        recommendationsList = new ListView<>();
 
-        listaRecomendados = new ListView<>();
+        closeButton = new Button("Close");
+        closeButton.setOnAction(event -> stage.close());
 
-        btnClose = new Button("Close");
-        btnClose.setDisable(true);
+        HBox recommendationsBox = new HBox(10, labelRecommendations, numberOfRecommendationsSpinner);
+        VBox root = new VBox(10, labelMessage, recommendationsBox, recommendationsList, closeButton);
+        root.setPadding(new Insets(15));
 
-        layaut = new VBox();
-        layaut.getChildren().addAll(layautCantRecomendaciones,labelMSG,listaRecomendados,btnClose);
+        stage.setTitle("Recommendations");
+        stage.setScene(new Scene(root, 450, 400));
+    }
+
+    @Override
+    public void modelUpdated() {
+        labelMessage.setText("If you liked \"" + model.getSelectedSong() + "\" you might like:");
+        Integer currentValue = numberOfRecommendationsSpinner.getValue();
+
+        if (currentValue == null || currentValue.intValue() != model.getNumberOfRecommendations()) {
+            numberOfRecommendationsSpinner.getValueFactory().setValue(model.getNumberOfRecommendations());
+        }
+
+        recommendationsList.setItems(FXCollections.observableArrayList(model.getRecommendations()));
+    }
+
+    public void show() {
+        stage.show();
+        stage.toFront();
+    }
+
+    public Spinner<Integer> getNumberOfRecommendationsSpinner() {
+        return numberOfRecommendationsSpinner;
     }
 
 }

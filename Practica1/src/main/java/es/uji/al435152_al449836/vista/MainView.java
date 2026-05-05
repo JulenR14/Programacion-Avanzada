@@ -1,10 +1,11 @@
 package es.uji.al435152_al449836.vista;
 
-
+import es.uji.al435152_al449836.controlador.MainController;
+import es.uji.al435152_al449836.modelo.recomendaciones.ModelListener;
+import es.uji.al435152_al449836.modelo.recomendaciones.RecommendationModel;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -13,37 +14,39 @@ import javafx.stage.Stage;
 
 import java.util.List;
 
-public class MainView extends Application {
-    private  VBox root;
+public class MainView extends Application implements ModelListener {
+    private VBox root;
 
-    private  Label titleLabel;
+    private Label titleLabel;
 
-    private  Label recommendationTypeLabel;
-    private  RadioButton knnRadioButton;
-    private  RadioButton kMeansRadioButton;
-    private  ToggleGroup recommendationTypeGroup;
+    private Label recommendationTypeLabel;
+    private RadioButton knnRadioButton;
+    private RadioButton kMeansRadioButton;
+    private ToggleGroup recommendationTypeGroup;
 
-    private  Label distanceTypeLabel;
-    private  RadioButton euclideanRadioButton;
-    private  RadioButton manhattanRadioButton;
-    private  ToggleGroup distanceTypeGroup;
+    private Label distanceTypeLabel;
+    private RadioButton euclideanRadioButton;
+    private RadioButton manhattanRadioButton;
+    private ToggleGroup distanceTypeGroup;
 
-    private  Label songsLabel;
-    private  ListView<String> songsListView;
+    private Label songsLabel;
+    private ListView<String> songsListView;
 
-    private  Label numberOfRecommendationsLabel;
-    private  Spinner<Integer> numberOfRecommendationsSpinner;
+    private Label numberOfRecommendationsLabel;
+    private Spinner<Integer> numberOfRecommendationsSpinner;
 
-    private  Button recommendButton;
+    private Button recommendButton;
 
-    public static void main(String[] args){
+    private RecommendationModel model;
+
+    public static void main(String[] args) {
         launch(args);
-
     }
+
     @Override
     public void start(Stage primaryStage) {
         root = new VBox(10);
-        root.setPadding(new     Insets(15));
+        root.setPadding(new Insets(15));
 
         titleLabel = new Label("Music Recommender");
 
@@ -86,15 +89,27 @@ public class MainView extends Application {
                 numberOfRecommendationsLabel,
                 numberOfRecommendationsSpinner,
                 recommendButton
-        );                        // Muestra la ventana
+        );
+
         primaryStage.setScene(new Scene(root));
-        primaryStage.setTitle("Opciones");
+        primaryStage.setTitle("Music Recommender");
         primaryStage.show();
+
+        try {
+            model = new RecommendationModel();
+            model.addListener(this);
+            new MainController(this, model);
+            setSongs(model.getSongTitles());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    public MainView() {
-
+    @Override
+    public void modelUpdated() {
+        setSongs(model.getSongTitles());
     }
+
     public Parent getRoot() {
         return root;
     }
@@ -112,13 +127,11 @@ public class MainView extends Application {
     }
 
     public String getSelectedRecommendationType() {
-        RadioButton selected = (RadioButton) recommendationTypeGroup.getSelectedToggle();
-        return selected.getText();
+        return knnRadioButton.isSelected() ? "knn" : "kmeans";
     }
 
     public String getSelectedDistanceType() {
-        RadioButton selected = (RadioButton) distanceTypeGroup.getSelectedToggle();
-        return selected.getText();
+        return euclideanRadioButton.isSelected() ? "euclidean" : "manhattan";
     }
 
     public Button getRecommendButton() {
@@ -128,9 +141,4 @@ public class MainView extends Application {
     public ListView<String> getSongsListView() {
         return songsListView;
     }
-
-
-
-
-
 }

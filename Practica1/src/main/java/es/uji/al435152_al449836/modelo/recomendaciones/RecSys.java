@@ -43,14 +43,20 @@ public class RecSys{
         Integer estimacionLiked = estimaciones.get(nameLikedItem);
 
         // Busca items con la misma clase estimada
-        for (String k : estimaciones.keySet()){
-            if (estimaciones.get(k) == estimacionLiked){
+        for (String k : estimaciones.keySet()) {
+            if (k.equals(nameLikedItem)) {
+                continue;
+            }
+
+            if (estimaciones.get(k).equals(estimacionLiked)) {
                 lista.add(k);
 
-                // Se detiene cuando alcanza el número deseado
-                if (lista.size()==numRecommendations) return lista;
+                if (lista.size() == numRecommendations) {
+                    return lista;
+                }
             }
         }
+
 
         return lista; // puede devolver menos si no hay suficientes
     }

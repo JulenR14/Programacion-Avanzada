@@ -106,20 +106,21 @@ public class KMeans implements Algorithm<Table,List<Double>,Integer>{
     }
 
     private void inicializarCentroides() {
-        // Este conjunto sirve para no repetir índices al elegir centroides.
         Set<Integer> usados = new HashSet<>();
-        int indice = random.nextInt(data.getRowCount());
 
-        // Vamos tomando filas aleatorias de la tabla para arrancar el algoritmo.
-        while (centroides.size() < numClusters && !usados.contains(indice)) {
+        while (centroides.size() < numClusters) {
+            int indice = random.nextInt(data.getRowCount());
 
-            indice = random.nextInt(data.getRowCount());
+            if (usados.contains(indice)) {
+                continue;
+            }
+
             usados.add(indice);
             List<Double> fila = data.getRowAt(indice).getData();
-            // Copiamos la fila para que el centroide tenga su propia lista.
             centroides.add(new ArrayList<>(fila));
         }
     }
+
 
     private List<List<Row>> asignarClusters() {
         // Esta estructura guardará qué filas caen en cada cluster.
