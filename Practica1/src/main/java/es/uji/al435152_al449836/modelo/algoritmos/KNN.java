@@ -7,58 +7,78 @@ import es.uji.al435152_al449836.modelo.datos.TableWithLabels;
 
 import java.util.List;
 
-public class KNN implements Algorithm<TableWithLabels,List<Double>,Integer> {
-
-    // Guardamos la tabla con la que se entrena el algoritmo.
+/**
+ * Implementacion de KNN para clasificacion.
+ *
+ * <p>En esta practica se esta usando la version mas simple del algoritmo:
+ * para una muestra nueva se busca la fila etiquetada mas cercana y se devuelve
+ * su etiqueta. La idea de cercania no esta fijada aqui, sino en la estrategia
+ * {@link Distance} que se inyecta en el constructor.
+ */
+public class KNN implements Algorithm<TableWithLabels, List<Double>, Integer> {
+    /**
+     * Tabla etiquetada que el algoritmo conserva tras el entrenamiento.
+     */
     private TableWithLabels tablaEntrenada;
 
-    // Esta referencia permite cambiar la forma de medir distancias
-    // sin tocar el resto del algoritmo.
+    /**
+     * Estrategia usada para medir la distancia entre canciones.
+     */
     private Distance distance;
 
-    public KNN (Distance distance){
-        // El algoritmo recibe desde fuera la estrategia de distancia.
+    /**
+     * Construye KNN con la distancia indicada por el cliente.
+     */
+    public KNN(Distance distance) {
         this.distance = distance;
     }
-    public KNN(){
-        // Si no se indica ninguna distancia, usamos la euclídea por defecto.
+
+    /**
+     * Construye KNN usando distancia euclidea por defecto.
+     */
+    public KNN() {
         this.distance = new EuclideanDistance();
     }
-    public void train(TableWithLabels data){
-        // Entrenar KNN aquí consiste simplemente en guardar los datos.
-        tablaEntrenada = (TableWithLabels) data;
+
+    /**
+     * En KNN entrenar significa guardar los ejemplos etiquetados.
+     *
+     * <p>No se calculan centroides ni parametros compactos: la "memoria" del
+     * algoritmo es el propio conjunto de entrenamiento.
+     */
+    @Override
+    public void train(TableWithLabels data) {
+        tablaEntrenada = data;
     }
 
-    public Integer estimate(List<Double> data){
-        // No podemos estimar nada si antes no se ha hecho train.
-        if (tablaEntrenada == null) throw new IllegalStateException("No se ha entrenado la tabla");
+    /**
+     * Busca la fila de entrenamiento mas parecida a la muestra y devuelve su clase.
+     */
+    @Override
+    public Integer estimate(List<Double> data) {
+        if (tablaEntrenada == null) {
+            throw new IllegalStateException("No se ha entrenado la tabla");
+        }
 
-        // Estas variables guardan el mejor candidato encontrado hasta ahora.
         double bestDist = Double.POSITIVE_INFINITY;
         String bestLabel = null;
 
-        // Recorremos todas las filas de entrenamiento para buscar
-        // cuál está más cerca de la muestra recibida.
+        // Se examina cada fila del entrenamiento porque este KNN compara la
+        // muestra nueva contra todos los ejemplos almacenados.
         int n = tablaEntrenada.getRowCount();
         for (int i = 0; i < n; i++) {
-
             RowWithLabel row = tablaEntrenada.getRowAt(i);
             List<Double> x = row.getData();
-
-            // La distancia concreta no la calcula KNN:
-            // la delega en el objeto Distance que tenga inyectado.
             double dist = distance.calculateDistance(data, x);
 
-            // Si encontramos una fila más cercana, pasa a ser la mejor.
             if (dist < bestDist) {
                 bestDist = dist;
                 bestLabel = row.getLabel();
             }
         }
 
-        // Al final devolvemos la etiqueta ganadora convertida a entero.
+        // La tabla mantiene la correspondencia etiqueta -> entero para que el
+        // recomendador pueda trabajar con clases numericas.
         return tablaEntrenada.getLabelAsInteger(bestLabel);
-
     }
-
 }

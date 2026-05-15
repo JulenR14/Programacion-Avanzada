@@ -5,42 +5,60 @@ import es.uji.al435152_al449836.modelo.datos.Table;
 import java.io.File;
 import java.util.Scanner;
 
-public abstract class FileReader <T extends Table> extends ReaderTemplate<T>{
-    // Este scanner se encarga de ir leyendo el fichero línea a línea.
+/**
+ * Lector generico de ficheros apoyado en {@link Scanner}.
+ *
+ * <p>Esta clase resuelve el recurso desde el classpath, lo abre, permite
+ * consumirlo linea a linea y lo cierra al final. La interpretacion concreta de
+ * cabeceras y datos sigue delegada en las subclases.
+ */
+public abstract class FileReader<T extends Table> extends ReaderTemplate<T> {
+    /**
+     * Scanner asociado al fichero actualmente abierto.
+     */
     private Scanner scanner;
 
+    /**
+     * Construye el lector recordando la ruta del recurso a consumir.
+     */
     public FileReader(String source) {
         super(source);
     }
 
-    public void openSource(String source){
-        try{
-            // Convertimos el recurso del proyecto a una ruta real del sistema.
+    /**
+     * Abre el recurso indicado y lo deja listo para lectura secuencial.
+     */
+    @Override
+    public void openSource(String source) {
+        try {
             String ref = getClass().getClassLoader().getResource(source).toURI().getPath();
-
-            // Abrimos el fichero para poder leerlo con Scanner.
             scanner = new Scanner(new File(ref));
-        }catch (Exception e){
+        } catch (Exception e) {
             System.err.print("Error: " + e.getMessage());
         }
     }
 
+    /**
+     * Cierra el recurso asociado al scanner.
+     */
     @Override
     public void closeSource() {
-        // Al terminar, cerramos el fichero para liberar el recurso.
         scanner.close();
     }
 
+    /**
+     * Indica si quedan lineas pendientes de lectura.
+     */
     @Override
-    public boolean hasMoreData(){
-        // Devuelve si quedan más líneas por leer.
+    public boolean hasMoreData() {
         return scanner.hasNextLine();
     }
+
+    /**
+     * Devuelve la siguiente linea del fichero.
+     */
     @Override
-    public String getNextData(){
-        // Devuelve la siguiente línea del fichero.
+    public String getNextData() {
         return scanner.nextLine();
     }
-
-
 }

@@ -2,17 +2,29 @@ package es.uji.al435152_al449836.modelo.datos;
 
 import java.util.List;
 
+/**
+ * Representa una fila numerica del dataset.
+ *
+ * <p>Cada posicion de la lista corresponde con una caracteristica de la
+ * cancion en el mismo orden en que aparecen las cabeceras de la tabla.
+ */
 public class Row {
-    //Lista de datos de la fila
+    /**
+     * Valores numericos de la fila.
+     */
     private List<Double> data;
 
-    //Contructor que obtiene los datos de la fila
-    public Row(List<Double> numberlist){
+    /**
+     * Construye una fila a partir de su lista de caracteristicas.
+     */
+    public Row(List<Double> numberlist) {
         data = numberlist;
     }
 
-    //Getter para obtener datos
-    public List<Double> getData(){
+    /**
+     * Devuelve los valores numericos almacenados en la fila.
+     */
+    public List<Double> getData() {
         return data;
     }
 }

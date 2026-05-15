@@ -6,46 +6,53 @@ import es.uji.al435152_al449836.modelo.datos.Table;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CSVUnlabeledFileReader extends FileReader <Table>{
+/**
+ * Lector de CSV sin columna de etiqueta.
+ *
+ * <p>Se utiliza con los datasets que alimentan a KMeans, donde todas las
+ * columnas representan caracteristicas numericas y no existe una clase final.
+ */
+public class CSVUnlabeledFileReader extends FileReader<Table> {
     private String nombrefichero;
 
-    public CSVUnlabeledFileReader(String nombrefichero){
-        // La clase madre ya guarda la fuente, así que aquí solo la pasamos.
+    /**
+     * Construye el lector para el recurso indicado.
+     */
+    public CSVUnlabeledFileReader(String nombrefichero) {
         super(nombrefichero);
         this.nombrefichero = nombrefichero;
     }
+
+    /**
+     * Interpreta la primera linea como lista de cabeceras.
+     */
     @Override
-    public void processHeaders(String headerLine){
-        // Al empezar la lectura, creamos la tabla sin etiquetas.
+    public void processHeaders(String headerLine) {
         this.table = new Table();
 
-        // La primera línea del CSV contiene los nombres de columnas.
         String[] parts = headerLine.split(",");
         List<String> headers = new ArrayList<>();
 
-        // Guardamos cada nombre de columna en la lista de cabeceras.
         for (String part : parts) {
             headers.add(part);
         }
 
         table.setHeaders(headers);
-
     }
+
+    /**
+     * Convierte una linea CSV en una fila numerica y la anade a la tabla.
+     */
     @Override
-    public void processData(String data){
-        // Cada línea de datos se separa por comas.
+    public void processData(String data) {
         String[] partes = data.split(",");
         List<Double> valores = new ArrayList<>();
 
-        // Convertimos cada texto numérico a Double.
         for (String parte : partes) {
             valores.add(Double.parseDouble(parte));
         }
 
-        // Con esos valores construimos una fila normal y la añadimos a la tabla.
         Row fila = new Row(valores);
         this.table.addRow(fila);
     }
-
-
 }

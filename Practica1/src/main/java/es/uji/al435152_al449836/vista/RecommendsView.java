@@ -18,6 +18,12 @@ import javafx.stage.Stage;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
+/**
+ * Ventana secundaria que muestra las recomendaciones generadas.
+ *
+ * <p>Su papel no se limita a listar canciones: tambien acompana cada resultado
+ * con dos visores web que buscan la cancion activa en YouTube y Wikipedia.
+ */
 public class RecommendsView implements ModelListener {
     private final RecommendationModel model;
     private final Stage stage;
@@ -29,7 +35,9 @@ public class RecommendsView implements ModelListener {
     private final WebView wikiview;
     private String lastLoadedSong;
 
-
+    /**
+     * Construye la ventana de resultados y prepara sus listeners internos.
+     */
     public RecommendsView(RecommendationModel model) {
         this.model = model;
 
@@ -47,20 +55,15 @@ public class RecommendsView implements ModelListener {
         closeButton = new Button("Close");
         closeButton.setOnAction(event -> stage.close());
 
-        // Creamos las dos vistas web.
         youtubeView = new WebView();
         wikiview = new WebView();
 
-        // Les damos una altura razonable para que no queden demasiado pequeñas.
         youtubeView.setPrefHeight(300);
         wikiview.setPrefHeight(300);
 
-        // Títulos visuales para que el usuario entienda qué está viendo.
         Label youtubeLabel = new Label("YouTube");
         Label wikilabel = new Label("Wikipedia");
 
-        // Metemos cada visor debajo de su título.
-        // Así la parte derecha de la ventana queda más ordenada y clara.
         VBox mediaPanel = new VBox(
                 10,
                 youtubeLabel,
@@ -69,20 +72,16 @@ public class RecommendsView implements ModelListener {
                 wikiview
         );
 
-        // Esto ayuda a que los WebView crezcan cuando la ventana se hace grande.
-        // Si no lo ponéis, a veces el reparto visual queda un poco pobre.
         VBox.setVgrow(youtubeView, Priority.ALWAYS);
         VBox.setVgrow(wikiview, Priority.ALWAYS);
 
-
-
         HBox recommendationsBox = new HBox(10, labelRecommendations, numberOfRecommendationsSpinner);
         VBox root = new VBox(10, labelMessage, recommendationsBox, recommendationsList, closeButton);
-        HBox webViews = new HBox(10,root,mediaPanel);
+        HBox webViews = new HBox(10, root, mediaPanel);
 
         root.setPadding(new Insets(15));
 
-        // Dejamos que la lista y el panel web respiren bien cuando se agranda la ventana.
+        // La parte izquierda contiene control y resultados; la derecha, contexto web.
         HBox.setHgrow(root, Priority.SOMETIMES);
         HBox.setHgrow(mediaPanel, Priority.ALWAYS);
         VBox.setVgrow(recommendationsList, Priority.ALWAYS);
@@ -90,126 +89,126 @@ public class RecommendsView implements ModelListener {
         stage.setTitle("Recommendations");
         stage.setScene(new Scene(webViews, 450, 400));
 
-        // Cargamos un mensaje inicial sencillo para que las ventanas
-        // no aparezcan completamente vacías la primera vez.
         youtubeView.getEngine().loadContent(
-                "<html><body><h3>Selecciona una canción para buscarla en YouTube.</h3></body></html>"
+                "<html><body><h3>Selecciona una cancion para buscarla en YouTube.</h3></body></html>"
         );
 
         wikiview.getEngine().loadContent(
-                "<html><body><h3>Selecciona una canción para buscarla en Wikipedia.</h3></body></html>"
+                "<html><body><h3>Selecciona una cancion para buscarla en Wikipedia.</h3></body></html>"
         );
 
-        // Este listener está bien en el constructor, porque la lista es la misma
-        // durante toda la vida de la ventana. Lo importante es no recargar si la
-    // canción realmente no ha cambiado para el usuario.
+        // Este listener ilustra muy bien el flujo de la ventana:
+        // al cambiar la recomendacion seleccionada, se actualizan ambos paneles web.
         recommendationsList.getSelectionModel().selectedItemProperty().addListener((obs, oldSong, newSong) -> {
             if (newSong == null) {
                 return;
             }
 
-            // Si ya tenemos cargada exactamente esta canción,
-            // no hacemos nada. Así evitamos refrescos innecesarios.
             if (newSong.equals(lastLoadedSong)) {
                 return;
             }
 
             youtubeView.getEngine().load(buildYoutubeSearchUrl(newSong));
             wikiview.getEngine().load(buildWikiSearchUrl(newSong));
-
-            // Actualizamos el recuerdo de la última canción realmente mostrada.
             lastLoadedSong = newSong;
         });
-
     }
 
+    /**
+     * Refresca la lista de recomendaciones cuando el modelo cambia.
+     *
+     * <p>Primero intenta conservar la seleccion previa para no desorientar al
+     * usuario. Si esa cancion ya no esta en la lista, selecciona la primera.
+     * Esa nueva seleccion activa de forma natural la carga de YouTube y Wikipedia.
+     * Tambien es mas eficiente, pues si el usuario se dedica a ir reduciendo el
+     * numero de canciones, si se elimina la cancion seleccionada y se selecciona
+     * la anteriror a ella, en la siguiente reduccion del numero de canciones se
+     * eliminara tambien, entrando en un proceso mas costoso que seleccionar
+     * directamente la primera cancion
+     */
     @Override
     public void modelUpdated() {
-        // Antes de tocar la lista, recordamos qué canción estaba seleccionada.
-// Esto es importante porque al refrescar las recomendaciones,
-// la ListView puede perder temporalmente la selección.
         String previousSelection = recommendationsList.getSelectionModel().getSelectedItem();
 
         recommendationsList.setItems(FXCollections.observableArrayList(model.getRecommendations()));
 
-// Si la canción que estaba seleccionada sigue estando en la nueva lista,
-// la restauramos. Así el usuario mantiene contexto.
         if (previousSelection != null && recommendationsList.getItems().contains(previousSelection)) {
             recommendationsList.getSelectionModel().select(previousSelection);
-        }
-// Solo seleccionamos la primera si la canción anterior ya no está.
-// Esto evita saltos raros y recargas que no aportan nada.
-        else if (!recommendationsList.getItems().isEmpty()) {
+        } else if (!recommendationsList.getItems().isEmpty()) {
             recommendationsList.getSelectionModel().selectFirst();
         }
-
     }
 
+    /**
+     * Muestra la ventana y la trae al frente.
+     */
     public void show() {
         stage.show();
         stage.toFront();
     }
 
+    /**
+     * Expone el spinner para que el controlador pueda escuchar sus cambios.
+     */
     public Spinner<Integer> getNumberOfRecommendationsSpinner() {
         return numberOfRecommendationsSpinner;
     }
+
+    /**
+     * Sincroniza el spinner de esta ventana con la cantidad elegida en la vista principal.
+     */
+    public void setNumberOfRecommendations(int value) {
+        numberOfRecommendationsSpinner.getValueFactory().setValue(value);
+    }
+
+    /**
+     * Construye la URL de busqueda de YouTube para la cancion dada.
+     */
     private String buildYoutubeSearchUrl(String songTitle) {
         String query = URLEncoder.encode(songTitle, StandardCharsets.UTF_8);
         return "https://www.youtube.com/results?search_query=" + query;
     }
 
-    // Aquí construimos la búsqueda final para Wikipedia.
-// En vez de usar el título bruto, usamos una versión limpiada.
-// Añadimos "song" porque Wikipedia suele encontrar mejor canciones así.
+    /**
+     * Construye la URL de busqueda de Wikipedia a partir de un titulo limpiado.
+     *
+     * <p>Esta limpieza no afecta al algoritmo. Solo mejora el flujo visual de la
+     * demo para que las busquedas externas encuentren la cancion con mas facilidad.
+     */
     private String buildWikiSearchUrl(String songTitle) {
         String cleanTitle = normalizeSongTitleForWikipedia(songTitle);
 
-        // Si el texto se queda vacío por una limpieza agresiva,
-        // usamos el original como plan B para no romper la búsqueda.
         if (cleanTitle.isBlank()) {
             cleanTitle = songTitle;
         }
 
-        // Añadimos "song" como pista para que Wikipedia busque la canción
-        // y no otro concepto con el mismo nombre.
         String query = URLEncoder.encode(cleanTitle, StandardCharsets.UTF_8);
-
         return "https://en.wikipedia.org/w/index.php?search=" + query;
     }
 
-    // Este método intenta convertir el texto del dataset en algo más razonable
-// para buscar en Wikipedia. No hace magia, pero sí quita bastante ruido.
+    /**
+     * Reduce ruido habitual del dataset antes de consultar Wikipedia.
+     *
+     * <p>Intenta eliminar comillas, parentesis, sufijos tipo remix y separadores
+     * decorativos para quedarse con una forma mas limpia del titulo.
+     */
     private String normalizeSongTitleForWikipedia(String rawTitle) {
         if (rawTitle == null) {
             return "";
         }
 
         String title = rawTitle.trim();
-
-        // Quitamos comillas dobles al principio y final.
         title = title.replace("\"", "");
-
-        // Quitamos el contenido entre paréntesis, que muchas veces es:
-        // feat., remix, version, etc., y suele estorbar más que ayudar.
         title = title.replaceAll("\\(.*?\\)", "").trim();
 
-        // Si hay algo tipo "Canción - Artista" o "Tema - Remix",
-        // nos quedamos con la parte de la izquierda, que suele ser el título.
         if (title.contains(" - ")) {
             title = title.split(" - ")[0].trim();
         }
 
-        // Si aparecen barras verticales decorativas, las convertimos en espacios.
         title = title.replace("|", " ");
-
-        // Si hay muchas barras normales, también estorban bastante para Wikipedia.
         title = title.replace("/", " ");
-
-        // Si hay dobles espacios después de limpiar, los compactamos.
         title = title.replaceAll("\\s+", " ").trim();
 
         return title;
     }
-
-
 }
