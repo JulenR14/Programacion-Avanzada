@@ -22,12 +22,12 @@ import java.util.List;
 /**
  * Ventana principal de la aplicacion JavaFX.
  *
- * <p>Esta vista concentra los controles que configuran una recomendacion:
+ * Esta vista concentra los controles que configuran una recomendacion:
  * algoritmo, tipo de distancia, cancion seleccionada y numero de resultados.
  * La logica de negocio no vive aqui: la vista solo construye widgets, expone
  * su estado y se deja coordinar por el controlador.
  */
-public class MainView extends Application implements ModelListener {
+public class MainView extends Application  {
     private VBox root;
 
     private Label titleLabel;
@@ -62,7 +62,7 @@ public class MainView extends Application implements ModelListener {
     /**
      * Construye la interfaz principal y la conecta con el modelo.
      *
-     * <p>El orden de arranque es importante:
+     * El orden de arranque es importante:
      * - primero se crean y colocan los controles;
      * - despues se muestra la ventana;
      * - por ultimo se instancia el modelo y el controlador.
@@ -118,13 +118,12 @@ public class MainView extends Application implements ModelListener {
                 recommendButton
         );
 
-        primaryStage.setScene(new Scene(root));
         primaryStage.setTitle("Music Recommender");
+        primaryStage.setScene(new Scene(root));
         primaryStage.show();
 
         try {
             model = new RecommendationModel();
-            model.addListener(this);
 
             // El controlador es quien conecta los eventos de la interfaz con el modelo.
             new MainController(this, model);
@@ -132,17 +131,6 @@ public class MainView extends Application implements ModelListener {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    /**
-     * Responde a cambios del modelo refrescando la lista visible de canciones.
-     *
-     * <p>En esta practica la lista de canciones es estable, pero la vista cumple
-     * igualmente el contrato de listener para mantener una arquitectura uniforme.
-     */
-    @Override
-    public void modelUpdated() {
-        setSongs(model.getSongTitles());
     }
 
     /**

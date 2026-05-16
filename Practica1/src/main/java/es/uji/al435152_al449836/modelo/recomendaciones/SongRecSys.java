@@ -21,7 +21,7 @@ import java.util.Scanner;
 /**
  * Ejemplo de uso por consola del sistema de recomendacion.
  *
- * <p>No interviene en la interfaz JavaFX principal, pero sirve para seguir el
+ * No interviene en la interfaz JavaFX principal, pero sirve para seguir el
  * flujo completo de manera muy directa: cargar ficheros, crear algoritmo,
  * entrenar, inicializar el test y pedir recomendaciones.
  */

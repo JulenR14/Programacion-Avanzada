@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Contrato de las estrategias de distancia.
  *
- * <p>Esta interfaz desacopla a los algoritmos de una formula concreta para
+ * Esta interfaz desacopla a los algoritmos de una formula concreta para
  * medir similitud. Gracias a ello, KNN y KMeans pueden reutilizarse con
  * distintas metricas sin cambiar su estructura principal.
  */

@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Lector de CSV cuya ultima columna actua como etiqueta.
  *
- * <p>Este formato es el que necesita KNN, porque separa claramente atributos
+ * Este formato es el que necesita KNN, porque separa claramente atributos
  * numericos y clase conocida de cada fila.
  */
 public class CSVLabeledFileReader extends FileReader<TableWithLabels> {

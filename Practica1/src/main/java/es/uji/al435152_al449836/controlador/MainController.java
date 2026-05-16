@@ -8,12 +8,12 @@ import javafx.scene.control.Alert;
 /**
  * Controlador principal de la aplicacion.
  *
- * <p>Su responsabilidad es enlazar la ventana inicial con el modelo de
+ * Su responsabilidad es enlazar la ventana inicial con el modelo de
  * recomendaciones. No implementa algoritmos ni almacena resultados: escucha
  * eventos de la interfaz, recoge las opciones elegidas por el usuario y delega
  * el calculo al modelo.
  *
- * <p>El flujo principal es:
+ * El flujo principal es:
  * 1. El usuario selecciona una cancion en la vista principal.
  * 2. El controlador habilita el boton de recomendacion.
  * 3. Al pulsar el boton, se leen algoritmo, distancia y numero de resultados.
@@ -47,7 +47,7 @@ public class MainController {
     /**
      * Registra los eventos clave de la ventana principal.
      *
-     * <p>El primer listener reacciona a cambios de seleccion en la lista de
+     * El primer listener reacciona a cambios de seleccion en la lista de
      * canciones. El segundo captura el click sobre el boton de recomendar.
      */
     private void registerEvents() {
@@ -70,7 +70,7 @@ public class MainController {
     /**
      * Gestiona el click sobre el boton principal.
      *
-     * <p>Aqui se cierra el ciclo entre interfaz y modelo: se recopilan los
+     * Aqui se cierra el ciclo entre interfaz y modelo: se recopilan los
      * parametros visibles en pantalla, se solicitan las recomendaciones y, si
      * todo va bien, se muestra la ventana con los resultados.
      */
@@ -104,7 +104,7 @@ public class MainController {
     /**
      * Crea la ventana de resultados una sola vez y la registra como listener.
      *
-     * <p>La vista secundaria se conserva en memoria para no reconstruir toda su
+     * La vista secundaria se conserva en memoria para no reconstruir toda su
      * interfaz cada vez. Ademas escucha el spinner interno para recalcular la
      * cantidad de recomendaciones manteniendo el contexto actual.
      */

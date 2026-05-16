@@ -8,7 +8,7 @@ import java.util.Scanner;
 /**
  * Lector generico de ficheros apoyado en {@link Scanner}.
  *
- * <p>Esta clase resuelve el recurso desde el classpath, lo abre, permite
+ * Esta clase resuelve el recurso desde el classpath, lo abre, permite
  * consumirlo linea a linea y lo cierra al final. La interpretacion concreta de
  * cabeceras y datos sigue delegada en las subclases.
  */

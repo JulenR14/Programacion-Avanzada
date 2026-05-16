@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Tabla generica de datos numericos.
  *
- * <p>Sirve como estructura comun para lectores, algoritmos y recomendadores.
+ * Sirve como estructura comun para lectores, algoritmos y recomendadores.
  * Mantiene cabeceras y filas, y ofrece operaciones basicas para acceder por
  * indice, inspeccionar columnas y conocer el tamano del conjunto.
  */
@@ -72,7 +72,7 @@ public class Table {
     /**
      * Inserta una fila al final de la tabla.
      *
-     * <p>El indice se genera de forma incremental a partir del tamano actual.
+     * El indice se genera de forma incremental a partir del tamano actual.
      */
     public void addRow(Row row) {
         rows.put(rows.size(), row);

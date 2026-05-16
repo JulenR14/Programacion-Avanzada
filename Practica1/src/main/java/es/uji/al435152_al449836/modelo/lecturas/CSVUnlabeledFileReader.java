@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Lector de CSV sin columna de etiqueta.
  *
- * <p>Se utiliza con los datasets que alimentan a KMeans, donde todas las
+ * Se utiliza con los datasets que alimentan a KMeans, donde todas las
  * columnas representan caracteristicas numericas y no existe una clase final.
  */
 public class CSVUnlabeledFileReader extends FileReader<Table> {

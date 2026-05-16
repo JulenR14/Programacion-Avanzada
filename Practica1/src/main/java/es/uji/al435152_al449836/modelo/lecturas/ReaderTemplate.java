@@ -5,7 +5,7 @@ import es.uji.al435152_al449836.modelo.datos.Table;
 /**
  * Plantilla general para la lectura de datasets.
  *
- * <p>Aplica el patron Template Method: el orden del proceso esta fijado aqui,
+ * Aplica el patron Template Method: el orden del proceso esta fijado aqui,
  * mientras que las subclases concretas deciden como abrir la fuente, como
  * procesar cabeceras y datos y como cerrar el recurso.
  */
@@ -60,7 +60,7 @@ public abstract class ReaderTemplate<T extends Table> {
     /**
      * Ejecuta el algoritmo completo de lectura en el orden correcto.
      *
-     * <p>Se declara final para garantizar que todas las subclases respetan el
+     * Se declara final para garantizar que todas las subclases respetan el
      * mismo flujo: abrir, leer cabeceras, leer datos, cerrar y devolver la tabla.
      */
     public final T readTableFromSource() {

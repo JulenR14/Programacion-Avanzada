@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Extension de {@link Row} que incorpora una etiqueta de clase.
  *
- * <p>Este tipo de fila es el que necesita KNN, porque cada ejemplo de
+ * Este tipo de fila es el que necesita KNN, porque cada ejemplo de
  * entrenamiento debe incluir tanto sus atributos numericos como la respuesta
  * correcta asociada.
  */

@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Distancia euclidea clasica.
  *
- * <p>Mide la separacion en linea recta entre dos puntos. Como eleva al cuadrado
+ * Mide la separacion en linea recta entre dos puntos. Como eleva al cuadrado
  * cada diferencia antes de sumarla, castiga mas las desviaciones grandes.
  */
 public class EuclideanDistance implements Distance {

@@ -13,13 +13,13 @@ import java.util.Map;
 /**
  * Nucleo generico del sistema de recomendacion.
  *
- * <p>Esta clase envuelve un algoritmo concreto y lo transforma en un servicio
+ * Esta clase envuelve un algoritmo concreto y lo transforma en un servicio
  * de recomendaciones util para la aplicacion. Su flujo se divide en tres pasos:
  * - entrenamiento del algoritmo con el conjunto adecuado;
  * - estimacion de la clase de cada item del conjunto de test;
  * - busqueda de items que compartan clase con la cancion elegida.
  *
- * <p>La idea de recomendacion es facil de explicar: si dos canciones acaban con
+ * La idea de recomendacion es facil de explicar: si dos canciones acaban con
  * la misma clase o cluster estimado, se consideran candidatas a recomendarse.
  */
 public class RecSys {
@@ -51,7 +51,7 @@ public class RecSys {
     /**
      * Calcula la clase estimada de cada item del conjunto de test.
      *
-     * <p>El resultado se almacena en un mapa porque la interfaz trabaja con
+     * El resultado se almacena en un mapa porque la interfaz trabaja con
      * nombres de canciones y no con indices numericos.
      */
     public void initialise(Table testData, List<String> testItemNames) {
@@ -65,7 +65,7 @@ public class RecSys {
     /**
      * Devuelve canciones con la misma clase estimada que la cancion elegida.
      *
-     * <p>Primero se valida que la cancion exista. Despues se toma su clase como
+     * Primero se valida que la cancion exista. Despues se toma su clase como
      * referencia y se recorre el mapa completo buscando coincidencias.
      */
     public List<String> recommend(String nameLikedItem, int numRecommendations) {

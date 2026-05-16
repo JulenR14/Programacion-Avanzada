@@ -15,12 +15,12 @@ import java.util.Set;
 /**
  * Implementacion del algoritmo KMeans.
  *
- * <p>A diferencia de KNN, este algoritmo no necesita etiquetas. Su objetivo es
+ * A diferencia de KNN, este algoritmo no necesita etiquetas. Su objetivo es
  * descubrir grupos de canciones parecidas en funcion de sus caracteristicas
  * numericas. Despues, cualquier cancion nueva se asigna al cluster cuyo
  * centroide quede mas cerca.
  *
- * <p>Dentro del recomendador, dos canciones se consideran afines cuando acaban
+ * Dentro del recomendador, dos canciones se consideran afines cuando acaban
  * con la misma estimacion de cluster.
  */
 public class KMeans implements Algorithm<Table, List<Double>, Integer> {
@@ -141,7 +141,7 @@ public class KMeans implements Algorithm<Table, List<Double>, Integer> {
     /**
      * Elige filas aleatorias distintas como centroides iniciales.
      *
-     * <p>La semilla fija hace que el proceso sea reproducible y defendible:
+     * La semilla fija hace que el proceso sea reproducible y defendible:
      * con los mismos datos y parametros se obtendra siempre el mismo arranque.
      */
     private void inicializarCentroides() {

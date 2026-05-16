@@ -21,7 +21,7 @@ import java.nio.charset.StandardCharsets;
 /**
  * Ventana secundaria que muestra las recomendaciones generadas.
  *
- * <p>Su papel no se limita a listar canciones: tambien acompana cada resultado
+ * Su papel no se limita a listar canciones: tambien acompana cada resultado
  * con dos visores web que buscan la cancion activa en YouTube y Wikipedia.
  */
 public class RecommendsView implements ModelListener {
@@ -89,6 +89,7 @@ public class RecommendsView implements ModelListener {
         stage.setTitle("Recommendations");
         stage.setScene(new Scene(webViews, 450, 400));
 
+
         youtubeView.getEngine().loadContent(
                 "<html><body><h3>Selecciona una cancion para buscarla en YouTube.</h3></body></html>"
         );
@@ -117,7 +118,7 @@ public class RecommendsView implements ModelListener {
     /**
      * Refresca la lista de recomendaciones cuando el modelo cambia.
      *
-     * <p>Primero intenta conservar la seleccion previa para no desorientar al
+     * Primero intenta conservar la seleccion previa para no desorientar al
      * usuario. Si esa cancion ya no esta en la lista, selecciona la primera.
      * Esa nueva seleccion activa de forma natural la carga de YouTube y Wikipedia.
      * Tambien es mas eficiente, pues si el usuario se dedica a ir reduciendo el
@@ -172,7 +173,7 @@ public class RecommendsView implements ModelListener {
     /**
      * Construye la URL de busqueda de Wikipedia a partir de un titulo limpiado.
      *
-     * <p>Esta limpieza no afecta al algoritmo. Solo mejora el flujo visual de la
+     * Esta limpieza no afecta al algoritmo. Solo mejora el flujo visual de la
      * demo para que las busquedas externas encuentren la cancion con mas facilidad.
      */
     private String buildWikiSearchUrl(String songTitle) {
@@ -189,7 +190,7 @@ public class RecommendsView implements ModelListener {
     /**
      * Reduce ruido habitual del dataset antes de consultar Wikipedia.
      *
-     * <p>Intenta eliminar comillas, parentesis, sufijos tipo remix y separadores
+     * Intenta eliminar comillas, parentesis, sufijos tipo remix y separadores
      * decorativos para quedarse con una forma mas limpia del titulo.
      */
     private String normalizeSongTitleForWikipedia(String rawTitle) {

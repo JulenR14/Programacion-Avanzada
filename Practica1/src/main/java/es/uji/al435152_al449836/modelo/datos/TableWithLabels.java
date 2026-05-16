@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * Variante de {@link Table} preparada para aprendizaje supervisado.
  *
- * <p>Ademas de las filas numericas, esta clase mantiene una conversion entre
+ * Ademas de las filas numericas, esta clase mantiene una conversion entre
  * etiquetas textuales e identificadores enteros. Esa conversion resulta util
  * porque KNN termina devolviendo clases numericas al recomendador.
  */

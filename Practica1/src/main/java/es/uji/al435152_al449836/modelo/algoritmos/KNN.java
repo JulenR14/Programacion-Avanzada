@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Implementacion de KNN para clasificacion.
  *
- * <p>En esta practica se esta usando la version mas simple del algoritmo:
+ * En esta practica se esta usando la version mas simple del algoritmo:
  * para una muestra nueva se busca la fila etiquetada mas cercana y se devuelve
  * su etiqueta. La idea de cercania no esta fijada aqui, sino en la estrategia
  * {@link Distance} que se inyecta en el constructor.
@@ -43,7 +43,7 @@ public class KNN implements Algorithm<TableWithLabels, List<Double>, Integer> {
     /**
      * En KNN entrenar significa guardar los ejemplos etiquetados.
      *
-     * <p>No se calculan centroides ni parametros compactos: la "memoria" del
+     * No se calculan centroides ni parametros compactos: la "memoria" del
      * algoritmo es el propio conjunto de entrenamiento.
      */
     @Override

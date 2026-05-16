@@ -20,11 +20,11 @@ import java.util.Scanner;
 /**
  * Modelo principal de la aplicacion de recomendaciones.
  *
- * <p>Centraliza el estado compartido entre las vistas y oculta los detalles de
+ * Centraliza el estado compartido entre las vistas y oculta los detalles de
  * carga de datos, construccion de algoritmos y calculo de resultados. Desde la
  * perspectiva de la interfaz, esta clase es la fuente de verdad del sistema.
  *
- * <p>Tambien implementa un mecanismo simple de observacion: cuando cambian las
+ * Tambien implementa un mecanismo simple de observacion: cuando cambian las
  * recomendaciones, notifica a todas las vistas registradas para que se refresquen.
  */
 public class RecommendationModel {
@@ -84,7 +84,7 @@ public class RecommendationModel {
     /**
      * Metodo central del flujo de la interfaz.
      *
-     * <p>Se invoca cuando el usuario pulsa el boton de recomendar o cambia el
+     * Se invoca cuando el usuario pulsa el boton de recomendar o cambia el
      * numero de resultados en la ventana secundaria. El proceso es:
      * - actualizar el estado publico del modelo;
      * - comprobar si hay que reconstruir el recomendador;

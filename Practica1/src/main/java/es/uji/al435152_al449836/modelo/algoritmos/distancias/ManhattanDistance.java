@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Distancia Manhattan.
  *
- * <p>En vez de medir una diagonal directa, suma las diferencias absolutas de
+ * En vez de medir una diagonal directa, suma las diferencias absolutas de
  * cada dimension. Es una metrica util cuando interesa tratar cada eje de forma
  * aditiva y sin amplificar tanto los valores extremos.
  */
